@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:include="layout :: htmlhead"></head>
+	<body>
+		<div class="container">
+			<nav th:replace="layout :: menu">(menu)</nav>
+ 			<div class="border border-dark" style="padding: 30px 30px 30px 30px">
+				<form th:action="@{/bookStore/(form)}" th:object="${book}" action="#" method="post">
+					<input type="hidden" id="txtid" th:field="*{id}" />
+				    <div class="form-group">
+				        <label for="txtname">Nome</label>
+				        <input type="text" th:field="*{name}" class="form-control" 
+				        id="txtname" placeholder="Nome">
+				    </div>
+				    <div class="form-group">
+				        <label for="txtauthor">Autor</label>
+				        <input type="text" th:field="*{author}" class="form-control" 
+				        id="txtauthor" placeholder="Digite o Autor">
+				    </div> 
+				   <div class="form-group">
+				        <label for="txtedition">Edição da Obra</label>
+				        <input type="text" th:field="*{edition}" class="form-control" 
+				        id="txtedition" placeholder="Digite qual a Edição da Obra">
+				    </div> 
+				    <button type="submit" class="btn btn-primary">Enviar</button>
+				</form>
+			</div>
+		</div>
+		<div th:include="layout :: footer" id="footer">(footer)</div>
+	</body>
+</html>

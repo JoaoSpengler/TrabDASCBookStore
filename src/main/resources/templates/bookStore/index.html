@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:include="layout :: htmlhead"></head>
+	<body>
+		<div class="container">
+			<nav th:replace="layout :: menu">(menu)</nav>
+			<a href="form.html" th:href="@{/bookStore/new}" 
+				class="btn btn-primary btn-lg" role="button">Registrar Livro</a>
+			<table class="table" id="books">
+				<thead class="thead-light"> 
+					<tr>
+						<th scope="col">Nome</th>
+						<th scope="col">Autor</th>
+						<th scope="col">Edição da Obra</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr scope="row" th:each="theBook : ${books}">
+						<td th:text="${theBook.name}"></td>
+						<td th:text="${theBook.author}"></td>
+						<td th:text="${theBook.edition}"></td>
+						<td><a th:href="@{'/bookStore/edit/' + ${theBook.id}}" class="btn btn-primary btn-lg">Editar</a>
+						<button class='btn btn-primary btn-lg js-delete' 
+						th:data-customer-id="${theBook.id}">Delete</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div th:include="layout :: footer" id="footer">(footer)</div>
+		
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#books").on("click", ".js-delete", function () {
+		            var button = $(this);
+		
+		            bootbox.confirm("Deseja mesmo excluir este registro?", function (result) {
+		                if (result) {
+		                    $.ajax({
+		                        url: "/bookStore/remove/" + button.attr("data-customer-id"),
+		                        method: "GET",
+		                        success: function () {
+		                        	window.location.href = "/bookStore/"
+		                        }
+		                    });
+		                }
+		            });
+		        });
+			});
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
